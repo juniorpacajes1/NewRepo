@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbDesarrolloSistemaISeptiembre2026Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Barrio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="NombreBarrio" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="FechaFundacion" Type="datetime" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="idZona" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="Nit" Type="bigint" />
+          <Property Name="idRubro" Type="bigint" Nullable="false" />
+          <Property Name="idBarrio" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Juridico">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="NombreEmpresa" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="RepresentanteLegal" Type="varchar" MaxLength="90" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Natural">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="NombreCliente" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="Genero" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="DocumentoIdentidad" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Rubro">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="NombreRubro" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zona">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="NombreZona" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbDesarrolloSistemaISeptiembre2026.dbo.VClienteGeneral' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VClienteGeneral">
+          <Key>
+            <PropertyRef Name="idcliente" />
+            <PropertyRef Name="NombreCliente" />
+            <PropertyRef Name="Direccion" />
+            <PropertyRef Name="Telefono" />
+            <PropertyRef Name="idBarrio" />
+            <PropertyRef Name="NombreBarrio" />
+            <PropertyRef Name="idzona" />
+            <PropertyRef Name="NombreZona" />
+            <PropertyRef Name="idrubro" />
+            <PropertyRef Name="NombreRubro" />
+            <PropertyRef Name="ZonaBarrio" />
+            <PropertyRef Name="TipoCliente" />
+          </Key>
+          <Property Name="idcliente" Type="bigint" Nullable="false" />
+          <Property Name="NombreCliente" Type="varchar" MaxLength="272" Nullable="false" />
+          <Property Name="DocumentoIdentidad" Type="varchar" MaxLength="90" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="Genero" Type="varchar" MaxLength="90" />
+          <Property Name="Direccion" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="Nit" Type="bigint" />
+          <Property Name="Telefono" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="idBarrio" Type="bigint" Nullable="false" />
+          <Property Name="NombreBarrio" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="idzona" Type="bigint" Nullable="false" />
+          <Property Name="NombreZona" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="idrubro" Type="bigint" Nullable="false" />
+          <Property Name="NombreRubro" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ZonaBarrio" Type="varchar" MaxLength="503" Nullable="false" />
+          <Property Name="TipoCliente" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Barrio__idZona__36B12243">
+          <End Role="Zona" Type="Self.Zona" Multiplicity="1" />
+          <End Role="Barrio" Type="Self.Barrio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zona">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Barrio">
+              <PropertyRef Name="idZona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__idBarri__3A81B327">
+          <End Role="Barrio" Type="Self.Barrio" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Barrio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idBarrio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__idRubro__398D8EEE">
+          <End Role="Rubro" Type="Self.Rubro" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubro">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Juridico__id__403A8C7D">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Juridico" Type="Self.Juridico" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Juridico">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Natural__id__3D5E1FD2">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Natural" Type="Self.Natural" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Natural">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbDesarrolloSistemaISeptiembre2026ModelStoreContainer">
+          <EntitySet Name="Barrio" EntityType="Self.Barrio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Juridico" EntityType="Self.Juridico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Natural" EntityType="Self.Natural" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rubro" EntityType="Self.Rubro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zona" EntityType="Self.Zona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VClienteGeneral" EntityType="Self.VClienteGeneral" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[VClienteGeneral].[idcliente] AS [idcliente], 
+[VClienteGeneral].[NombreCliente] AS [NombreCliente], 
+[VClienteGeneral].[DocumentoIdentidad] AS [DocumentoIdentidad], 
+[VClienteGeneral].[FechaNacimiento] AS [FechaNacimiento], 
+[VClienteGeneral].[Genero] AS [Genero], 
+[VClienteGeneral].[Direccion] AS [Direccion], 
+[VClienteGeneral].[Nit] AS [Nit], 
+[VClienteGeneral].[Telefono] AS [Telefono], 
+[VClienteGeneral].[idBarrio] AS [idBarrio], 
+[VClienteGeneral].[NombreBarrio] AS [NombreBarrio], 
+[VClienteGeneral].[idzona] AS [idzona], 
+[VClienteGeneral].[NombreZona] AS [NombreZona], 
+[VClienteGeneral].[idrubro] AS [idrubro], 
+[VClienteGeneral].[NombreRubro] AS [NombreRubro], 
+[VClienteGeneral].[ZonaBarrio] AS [ZonaBarrio], 
+[VClienteGeneral].[TipoCliente] AS [TipoCliente]
+FROM [dbo].[VClienteGeneral] AS [VClienteGeneral]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Barrio__idZona__36B12243" Association="Self.FK__Barrio__idZona__36B12243">
+            <End Role="Zona" EntitySet="Zona" />
+            <End Role="Barrio" EntitySet="Barrio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__idBarri__3A81B327" Association="Self.FK__Cliente__idBarri__3A81B327">
+            <End Role="Barrio" EntitySet="Barrio" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__idRubro__398D8EEE" Association="Self.FK__Cliente__idRubro__398D8EEE">
+            <End Role="Rubro" EntitySet="Rubro" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Juridico__id__403A8C7D" Association="Self.FK__Juridico__id__403A8C7D">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Juridico" EntitySet="Juridico" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Natural__id__3D5E1FD2" Association="Self.FK__Natural__id__3D5E1FD2">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Natural" EntitySet="Natural" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbDesarrolloSistemaISeptiembre2026Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Barrio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="NombreBarrio" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaFundacion" Type="DateTime" Precision="3" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idZona" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Zona" Relationship="Self.FK__Barrio__idZona__36B12243" FromRole="Barrio" ToRole="Zona" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Cliente__idBarri__3A81B327" FromRole="Barrio" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nit" Type="Int64" />
+          <Property Name="idRubro" Type="Int64" Nullable="false" />
+          <Property Name="idBarrio" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Barrio" Relationship="Self.FK__Cliente__idBarri__3A81B327" FromRole="Cliente" ToRole="Barrio" />
+          <NavigationProperty Name="Rubro" Relationship="Self.FK__Cliente__idRubro__398D8EEE" FromRole="Cliente" ToRole="Rubro" />
+          <NavigationProperty Name="Juridico" Relationship="Self.FK__Juridico__id__403A8C7D" FromRole="Cliente" ToRole="Juridico" />
+          <NavigationProperty Name="Natural" Relationship="Self.FK__Natural__id__3D5E1FD2" FromRole="Cliente" ToRole="Natural" />
+        </EntityType>
+        <EntityType Name="Juridico">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="NombreEmpresa" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RepresentanteLegal" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Juridico__id__403A8C7D" FromRole="Juridico" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Natural">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="NombreCliente" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Genero" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DocumentoIdentidad" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Natural__id__3D5E1FD2" FromRole="Natural" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Rubro">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="NombreRubro" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Cliente__idRubro__398D8EEE" FromRole="Rubro" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Zona">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="NombreZona" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Barrio" Relationship="Self.FK__Barrio__idZona__36B12243" FromRole="Zona" ToRole="Barrio" />
+        </EntityType>
+        <EntityType Name="VClienteGeneral">
+          <Key>
+            <PropertyRef Name="idcliente" />
+            <PropertyRef Name="NombreCliente" />
+            <PropertyRef Name="Direccion" />
+            <PropertyRef Name="Telefono" />
+            <PropertyRef Name="idBarrio" />
+            <PropertyRef Name="NombreBarrio" />
+            <PropertyRef Name="idzona" />
+            <PropertyRef Name="NombreZona" />
+            <PropertyRef Name="idrubro" />
+            <PropertyRef Name="NombreRubro" />
+            <PropertyRef Name="ZonaBarrio" />
+            <PropertyRef Name="TipoCliente" />
+          </Key>
+          <Property Name="idcliente" Type="Int64" Nullable="false" />
+          <Property Name="NombreCliente" Type="String" MaxLength="272" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DocumentoIdentidad" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Genero" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nit" Type="Int64" />
+          <Property Name="Telefono" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idBarrio" Type="Int64" Nullable="false" />
+          <Property Name="NombreBarrio" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idzona" Type="Int64" Nullable="false" />
+          <Property Name="NombreZona" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idrubro" Type="Int64" Nullable="false" />
+          <Property Name="NombreRubro" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ZonaBarrio" Type="String" MaxLength="503" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TipoCliente" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Barrio__idZona__36B12243">
+          <End Role="Zona" Type="Self.Zona" Multiplicity="1" />
+          <End Role="Barrio" Type="Self.Barrio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zona">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Barrio">
+              <PropertyRef Name="idZona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__idBarri__3A81B327">
+          <End Role="Barrio" Type="Self.Barrio" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Barrio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idBarrio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cliente__idRubro__398D8EEE">
+          <End Role="Rubro" Type="Self.Rubro" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubro">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Juridico__id__403A8C7D">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Juridico" Type="Self.Juridico" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Juridico">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Natural__id__3D5E1FD2">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Natural" Type="Self.Natural" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Natural">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbDesarrolloSistemaISeptiembre2026Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Barrio" EntityType="Self.Barrio" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Juridico" EntityType="Self.Juridico" />
+          <EntitySet Name="Natural" EntityType="Self.Natural" />
+          <EntitySet Name="Rubro" EntityType="Self.Rubro" />
+          <EntitySet Name="Zona" EntityType="Self.Zona" />
+          <EntitySet Name="VClienteGeneral" EntityType="Self.VClienteGeneral" />
+          <AssociationSet Name="FK__Barrio__idZona__36B12243" Association="Self.FK__Barrio__idZona__36B12243">
+            <End Role="Zona" EntitySet="Zona" />
+            <End Role="Barrio" EntitySet="Barrio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__idBarri__3A81B327" Association="Self.FK__Cliente__idBarri__3A81B327">
+            <End Role="Barrio" EntitySet="Barrio" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cliente__idRubro__398D8EEE" Association="Self.FK__Cliente__idRubro__398D8EEE">
+            <End Role="Rubro" EntitySet="Rubro" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Juridico__id__403A8C7D" Association="Self.FK__Juridico__id__403A8C7D">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Juridico" EntitySet="Juridico" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Natural__id__3D5E1FD2" Association="Self.FK__Natural__id__3D5E1FD2">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Natural" EntitySet="Natural" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbDesarrolloSistemaISeptiembre2026ModelStoreContainer" CdmEntityContainer="dbDesarrolloSistemaISeptiembre2026Entities">
+          <EntitySetMapping Name="Barrio">
+            <EntityTypeMapping TypeName="dbDesarrolloSistemaISeptiembre2026Model.Barrio">
+              <MappingFragment StoreEntitySet="Barrio">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NombreBarrio" ColumnName="NombreBarrio" />
+                <ScalarProperty Name="FechaFundacion" ColumnName="FechaFundacion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="idZona" ColumnName="idZona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="dbDesarrolloSistemaISeptiembre2026Model.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Nit" ColumnName="Nit" />
+                <ScalarProperty Name="idRubro" ColumnName="idRubro" />
+                <ScalarProperty Name="idBarrio" ColumnName="idBarrio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Juridico">
+            <EntityTypeMapping TypeName="dbDesarrolloSistemaISeptiembre2026Model.Juridico">
+              <MappingFragment StoreEntitySet="Juridico">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
+                <ScalarProperty Name="RepresentanteLegal" ColumnName="RepresentanteLegal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Natural">
+            <EntityTypeMapping TypeName="dbDesarrolloSistemaISeptiembre2026Model.Natural">
+              <MappingFragment StoreEntitySet="Natural">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="DocumentoIdentidad" ColumnName="DocumentoIdentidad" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rubro">
+            <EntityTypeMapping TypeName="dbDesarrolloSistemaISeptiembre2026Model.Rubro">
+              <MappingFragment StoreEntitySet="Rubro">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NombreRubro" ColumnName="NombreRubro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zona">
+            <EntityTypeMapping TypeName="dbDesarrolloSistemaISeptiembre2026Model.Zona">
+              <MappingFragment StoreEntitySet="Zona">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NombreZona" ColumnName="NombreZona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VClienteGeneral">
+            <EntityTypeMapping TypeName="dbDesarrolloSistemaISeptiembre2026Model.VClienteGeneral">
+              <MappingFragment StoreEntitySet="VClienteGeneral">
+                <ScalarProperty Name="idcliente" ColumnName="idcliente" />
+                <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+                <ScalarProperty Name="DocumentoIdentidad" ColumnName="DocumentoIdentidad" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Nit" ColumnName="Nit" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="idBarrio" ColumnName="idBarrio" />
+                <ScalarProperty Name="NombreBarrio" ColumnName="NombreBarrio" />
+                <ScalarProperty Name="idzona" ColumnName="idzona" />
+                <ScalarProperty Name="NombreZona" ColumnName="NombreZona" />
+                <ScalarProperty Name="idrubro" ColumnName="idrubro" />
+                <ScalarProperty Name="NombreRubro" ColumnName="NombreRubro" />
+                <ScalarProperty Name="ZonaBarrio" ColumnName="ZonaBarrio" />
+                <ScalarProperty Name="TipoCliente" ColumnName="TipoCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
